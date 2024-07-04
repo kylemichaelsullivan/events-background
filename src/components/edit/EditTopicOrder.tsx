@@ -26,10 +26,7 @@ function EditTopicOrder({
         type='button'
         className={isFirst ? 'invisible' : small_button}
         title={`Move ${topic ?? 'topic'} Up`}
-        onClick={() =>
-          // handleTopicOrder(e, topic, 'up', data, setData, isFirst)
-          handleTopicOrder(topicIndex, 'up', isFirst)
-        }
+        onClick={() => handleTopicOrder(topicIndex, 'up', isFirst)}
       >
         <FontAwesomeIcon icon={faArrowUp} />
       </button>
@@ -38,10 +35,7 @@ function EditTopicOrder({
         type='button'
         className={isLast ? 'invisible' : small_button}
         title={`Move ${topic ?? 'topic'} Down`}
-        onClick={() =>
-          // handleTopicOrder(e, topic, 'down', data, setData, isLast)
-          handleTopicOrder(topicIndex, 'down', isLast)
-        }
+        onClick={() => handleTopicOrder(topicIndex, 'down', isLast)}
       >
         <FontAwesomeIcon icon={faArrowDown} />
       </button>

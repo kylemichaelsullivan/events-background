@@ -15,7 +15,7 @@ function Format() {
       setFontSize(() => e.target.value);
     }
     if (attribute === 'paddingTop') {
-      setPaddingTop(() => e.target.value);
+      setPaddingTop(parseInt(e.target.value as string));
     }
   }
 
