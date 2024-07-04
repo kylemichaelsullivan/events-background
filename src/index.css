@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input:placeholder-shown {
+  border: 1px solid red;
+}
+
+.Preview {
+  width: 95vw;
+  height: 100vh;
+}
+
+.Preview::before {
+  position: absolute;
+  content: '12:34';
+  font-size: 5rem;
+  top: 7rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
