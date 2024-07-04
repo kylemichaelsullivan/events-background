@@ -31,7 +31,7 @@ export const FormatProvider = ({ children }: FormatProviderProps) => {
   const [paddingTop, setPaddingTop] = useState<string>(DEFAULT_PaddingTop);
 
   function handleFormatChange(
-    e: { target: { value: string | number } },
+    e: { target: { value: string } },
     attribute: 'fontSize' | 'paddingTop',
   ) {
     if (attribute === 'fontSize') {
