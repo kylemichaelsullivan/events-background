@@ -1,28 +1,25 @@
-import {
-  useState,
-  createContext,
-  useContext,
-  type Dispatch,
-  type ReactNode,
-  type SetStateAction,
-} from 'react';
+import { useState, createContext, useContext, type ReactNode } from 'react';
 
-import type { Event, Items } from '../types';
+import type { Items } from '../types';
 
-import { makeDate } from '../hooks/Date';
+import { makeDate } from '../lib/scripts';
 import { DEFAULT_Data } from '../lib/defaults';
 
 type DataContextType = {
   data: Items;
-  addTopic: any;
-  removeTopic: any;
-  addEvent: any;
-  removeEvent: any;
-  blurTopicTitle: any;
-  blurEventWhen: any;
-  blurEventWhere: any;
-  handleTopicOrder: any;
-  applyImport: any;
+  addTopic: () => void;
+  removeTopic: (topicIndex: number) => void;
+  addEvent: (topicIndex: number) => void;
+  removeEvent: (topicIndex: number, eventIndex: number) => void;
+  blurTopicTitle: (topicIndex: number) => void;
+  blurEventWhen: (topicIndex: number, eventIndex: number) => void;
+  blurEventWhere: (topicIndex: number, eventIndex: number) => void;
+  handleTopicOrder: (
+    topicIndex: number,
+    direction: 'up' | 'down',
+    disabled: boolean,
+  ) => void;
+  applyImport: (json: Items) => void;
 };
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
@@ -44,7 +41,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         +makeDate(a.when) - +makeDate(b.when) || a.where.localeCompare(b.where),
     );
 
-    setData((data: any) => [...data]);
+    setData((data: Items) => [...data]);
   }
 
   function sortAllTopics() {
@@ -82,7 +79,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
   function removeEvent(topicIndex: number, eventIndex: number) {
     const newData = [...data];
-    newData[topicIndex].events.splice(eventIndex, 1)[0];
+    if (eventIndex > 0) {
+      newData[topicIndex].events.splice(eventIndex, 1)[0];
+    }
 
     // make new event if topic is empty
     if (!newData[topicIndex].events.length) {
@@ -93,8 +92,10 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   }
 
   function blurTopicTitle(topicIndex: number) {
-    const input: any = document.getElementById(`topic-${topicIndex}`);
-    const value = input?.value;
+    const input = document.getElementById(
+      `topic-${topicIndex}`,
+    ) as HTMLInputElement | null;
+    const value = input?.value as string;
 
     const newData = [...data];
     newData[topicIndex].topic = value;
@@ -105,10 +106,10 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   }
 
   function blurEventWhen(topicIndex: number, eventIndex: number) {
-    const input: any = document.getElementById(
+    const input = document.getElementById(
       `when-${topicIndex}-${eventIndex}`,
-    );
-    const value = input?.value;
+    ) as HTMLInputElement | null;
+    const value = input?.value as string;
 
     const newData = [...data];
     newData[topicIndex].events[eventIndex].when = value;
@@ -119,10 +120,10 @@ export const DataProvider = ({ children }: DataProviderProps) => {
   }
 
   function blurEventWhere(topicIndex: number, eventIndex: number) {
-    const input: any = document.getElementById(
+    const input = document.getElementById(
       `where-${topicIndex}-${eventIndex}`,
-    );
-    const value = input?.value;
+    ) as HTMLInputElement | null;
+    const value = input?.value as string;
 
     const newData = [...data];
     newData[topicIndex].events[eventIndex].where = value;
@@ -148,7 +149,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     }
   }
 
-  function applyImport(json: any) {
+  function applyImport(json: Items) {
     setData(json);
   }
 

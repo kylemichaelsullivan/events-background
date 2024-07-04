@@ -3,7 +3,6 @@ import { FormatProvider } from '../context/Format';
 import Title from './Title';
 import Edit from './edit/Edit';
 import Format from './format/Format';
-// import { Preview } from './preview/Preview';
 import Preview from './preview/Preview';
 import Ports from './files/Ports';
 

@@ -23,7 +23,7 @@ function EditActions({
   function handleClick(action: 'add' | 'remove') {
     if (scope === 'event') {
       action === 'remove'
-        ? removeEvent(topicIndex, eventIndex)
+        ? removeEvent(topicIndex, eventIndex ?? -1)
         : addEvent(topicIndex);
     } else {
       action === 'remove' ? removeTopic(topicIndex) : addTopic();

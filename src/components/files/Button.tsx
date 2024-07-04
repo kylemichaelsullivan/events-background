@@ -1,12 +1,14 @@
+import type { IconProp } from '@fortawesome/fontawesome-svg-core';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { large_button } from '../../lib/classNames';
 
 type ButtonProps = {
   title: string;
-  icon: any;
+  icon: IconProp;
   order: number;
-  handleClick: any;
+  handleClick: () => void;
 };
 
 function Button({ title, icon, order, handleClick }: ButtonProps) {

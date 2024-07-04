@@ -10,11 +10,14 @@ import {
 import { DEFAULT_FontSize, DEFAULT_PaddingTop } from '../lib/defaults';
 
 type FormatContextType = {
-  fontSize: any;
-  paddingTop: any;
-  setFontSize: any;
-  setPaddingTop: any;
-  handleFormatChange: any;
+  fontSize: string;
+  paddingTop: number;
+  setFontSize: Dispatch<SetStateAction<string>>;
+  setPaddingTop: Dispatch<SetStateAction<number>>;
+  handleFormatChange: (
+    e: { target: { value: string | number } },
+    attribute: 'fontSize' | 'paddingTop',
+  ) => void;
 };
 
 const FormatContext = createContext<FormatContextType | undefined>(undefined);
@@ -32,10 +35,10 @@ export const FormatProvider = ({ children }: FormatProviderProps) => {
     attribute: 'fontSize' | 'paddingTop',
   ) {
     if (attribute === 'fontSize') {
-      setFontSize(e.target.value);
+      setFontSize(e.target.value as string);
     }
     if (attribute === 'paddingTop') {
-      setPaddingTop(e.target.value);
+      setPaddingTop(e.target.value as number);
     }
   }
 
