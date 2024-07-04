@@ -17,7 +17,7 @@ type FormatContextType = {
   setPaddingTop: Dispatch<SetStateAction<string>>;
   handleFormatChange: (
     e: ChangeEvent<HTMLSelectElement>,
-    formatType: 'fontSize' | 'paddingTop',
+    attribute: 'fontSize' | 'paddingTop',
   ) => void;
 };
 
@@ -32,7 +32,7 @@ export const FormatProvider = ({ children }: FormatProviderProps) => {
   const [paddingTop, setPaddingTop] = useState<string>(DEFAULT_PaddingTop);
 
   function handleFormatChange(
-    e: { target: { value: string } },
+    e: ChangeEvent<HTMLSelectElement>,
     attribute: 'fontSize' | 'paddingTop',
   ) {
     if (attribute === 'fontSize') {
