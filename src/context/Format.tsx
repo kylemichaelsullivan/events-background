@@ -39,7 +39,7 @@ export const FormatProvider = ({ children }: FormatProviderProps) => {
       setFontSize(e.target.value);
     }
     if (attribute === 'paddingTop') {
-      setPaddingTop(e.target.value.toString());
+      setPaddingTop(parseInt(e.target.value).toString());
     }
   }
 
