@@ -2,6 +2,7 @@ import {
   useState,
   createContext,
   useContext,
+  type ChangeEvent,
   type Dispatch,
   type ReactNode,
   type SetStateAction,
@@ -15,8 +16,8 @@ type FormatContextType = {
   setFontSize: Dispatch<SetStateAction<string>>;
   setPaddingTop: Dispatch<SetStateAction<string>>;
   handleFormatChange: (
-    e: { target: { value: string } },
-    attribute: 'fontSize' | 'paddingTop',
+    e: ChangeEvent<HTMLSelectElement>,
+    formatType: 'fontSize' | 'paddingTop',
   ) => void;
 };
 
