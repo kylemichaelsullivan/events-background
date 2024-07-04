@@ -1,23 +1,9 @@
-import { ChangeEvent } from 'react';
-
 import { useFormat } from '../../context/Format';
 
 import { FONT_SIZES, PADDING_TOPS } from '../../lib/formats';
 
 function Format() {
-  const { fontSize, paddingTop, setFontSize, setPaddingTop } = useFormat();
-
-  function handleFormatChange(
-    e: ChangeEvent<HTMLSelectElement>,
-    attribute: 'fontSize' | 'paddingTop',
-  ) {
-    if (attribute === 'fontSize') {
-      setFontSize(e.target.value as string);
-    }
-    if (attribute === 'paddingTop') {
-      setPaddingTop(e.target.value as string);
-    }
-  }
+  const { fontSize, paddingTop, handleFormatChange } = useFormat();
 
   return (
     <div className='Format flex flex-col border border-black gap-4 p-4 sm:flex-row'>
