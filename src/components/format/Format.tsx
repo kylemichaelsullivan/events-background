@@ -12,10 +12,10 @@ function Format() {
     attribute: 'fontSize' | 'paddingTop',
   ) {
     if (attribute === 'fontSize') {
-      setFontSize(() => e.target.value as string);
+      setFontSize(e.target.value as string);
     }
     if (attribute === 'paddingTop') {
-      setPaddingTop(parseInt(e.target.value as string));
+      setPaddingTop(e.target.value as string);
     }
   }
 
