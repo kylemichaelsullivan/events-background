@@ -14,5 +14,5 @@ export default function DisplayEvent({ when, where }: DisplayEventProps) {
   const date = formatDate(dateObject);
   const day = dayFromDate(dateObject);
 
-  return <li className='DisplayEvent'>{`${date} (${day}) @ ${where}`}</li>;
+  return <li className='DisplayEvent'>{`${date} (${day}): ${where}`}</li>;
 }
