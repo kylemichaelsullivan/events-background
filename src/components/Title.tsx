@@ -1,11 +1,11 @@
 type TitleProps = {
-  title: string;
+	title: string;
 };
 
 function Title({ title }: TitleProps) {
-  return (
-    <h1 className='Title text-3xl text-center py-4 sm:text-5xl'>{title}</h1>
-  );
+	return (
+		<h1 className='Title py-4 text-center text-3xl sm:text-5xl'>{title}</h1>
+	);
 }
 
 export default Title;
