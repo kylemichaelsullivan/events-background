@@ -10,13 +10,13 @@ type EditEventsProps = {
 function EditEvents({ topicIndex, events }: EditEventsProps) {
   return (
     <ul className="EditEvents flex flex-col gap-1">
-      {events.map((event: Event, i: number) => (
+      {events.map((event: Event) => (
         <EditEvent
-          where={event.where}
+          what={event.what}
           when={event.when}
           topicIndex={topicIndex}
-          eventIndex={i}
-          key={`${topicIndex}-${i}`}
+          eventId={event.id}
+          key={event.id}
         />
       ))}
     </ul>

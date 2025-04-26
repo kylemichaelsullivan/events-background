@@ -1,9 +1,5 @@
-import { useData } from '../../context/Data';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
-
-import { small_button } from '../../lib/classNames';
+import { useData } from '../../hooks/useData';
+import EditTopicOrderButton from './EditTopicOrderButton';
 
 type EditTopicOrderProps = {
 	topic: string;
@@ -22,23 +18,22 @@ function EditTopicOrder({
 
 	return (
 		<div className='EditTopicOrder flex w-full content-center justify-around pt-2'>
-			<button
-				type='button'
-				className={isFirst ? 'invisible' : small_button}
-				title={`Move ${topic ?? 'topic'} Up`}
-				onClick={() => handleTopicOrder(topicIndex, 'up', isFirst)}
-			>
-				<FontAwesomeIcon icon={faArrowUp} />
-			</button>
-
-			<button
-				type='button'
-				className={isLast ? 'invisible' : small_button}
-				title={`Move ${topic ?? 'topic'} Down`}
-				onClick={() => handleTopicOrder(topicIndex, 'down', isLast)}
-			>
-				<FontAwesomeIcon icon={faArrowDown} />
-			</button>
+			<EditTopicOrderButton
+				topic={topic ?? ''}
+				direction='up'
+				handleTopicOrder={handleTopicOrder}
+				isFirst={isFirst}
+				isLast={isLast}
+				topicIndex={topicIndex}
+			/>
+			<EditTopicOrderButton
+				topic={topic ?? ''}
+				direction='down'
+				handleTopicOrder={handleTopicOrder}
+				isFirst={isFirst}
+				isLast={isLast}
+				topicIndex={topicIndex}
+			/>
 		</div>
 	);
 }

@@ -1,7 +1,6 @@
 import type { Events } from '../../types';
 
-import EditTopicTitle from './EditTopicTitle';
-import EditActions from './EditActions';
+import EditTopicTitleLine from './EditTopicTitleLine';
 import EditEvents from './EditEvents';
 import EditTopicOrder from './EditTopicOrder';
 
@@ -22,10 +21,7 @@ function EditTopic({
 }: EditTopicProps) {
 	return (
 		<div className='EditTopic border bg-gray-400 p-2'>
-			<div className='flex justify-between pb-2'>
-				<EditTopicTitle title={topic} topicIndex={topicIndex} />
-				<EditActions scope='topic' title={topic} topicIndex={topicIndex} />
-			</div>
+			<EditTopicTitleLine topic={topic} topicIndex={topicIndex} />
 
 			{events.length && <EditEvents events={events} topicIndex={topicIndex} />}
 

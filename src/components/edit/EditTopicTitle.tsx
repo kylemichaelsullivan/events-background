@@ -1,23 +1,23 @@
-import { useData } from '../../context/Data';
+import { useData } from '../../hooks/useData';
 
 type EditTopicTitleProps = {
-	title: string;
-	topicIndex: number;
+  topic: string;
+  topicIndex: number;
 };
 
-function EditTopicTitle({ title, topicIndex }: EditTopicTitleProps) {
-	const { blurTopicTitle } = useData();
+function EditTopicTitle({ topic, topicIndex }: EditTopicTitleProps) {
+  const { blurTopicTitle } = useData();
 
-	return (
-		<input
-			type='text'
-			className='w-full p-1 text-lg font-bold'
-			placeholder='Topic'
-			defaultValue={title}
-			onBlur={() => blurTopicTitle(topicIndex)}
-			id={`topic-${topicIndex}`}
-		/>
-	);
+  return (
+    <input
+      type="text"
+      className="EditTopicTitle w-full p-1 text-lg font-bold"
+      defaultValue={topic}
+      placeholder="Topic"
+      onBlur={() => blurTopicTitle(topicIndex)}
+      id={`topic-${topicIndex}`}
+    />
+  );
 }
 
 export default EditTopicTitle;

@@ -1,56 +1,49 @@
-import { useData } from '../../context/Data';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-
-import { small_button } from '../../lib/classNames';
+import { useData } from '../../hooks/useData';
+import EditActionButton from './EditActionButton';
 
 type EditActionsProps = {
-	scope: 'topic' | 'event';
-	title?: string;
-	topicIndex: number;
-	eventIndex?: number;
+  scope: 'topic' | 'event';
+  title: string;
+  topicIndex: number;
+  eventId?: string;
 };
 
-function EditActions({
-	scope,
-	title,
-	topicIndex,
-	eventIndex,
-}: EditActionsProps) {
-	const { addTopic, removeTopic, addEvent, removeEvent } = useData();
+function EditActions({ scope, title, topicIndex, eventId }: EditActionsProps) {
+  const { addTopic, removeTopic, addEvent, removeEvent } = useData();
 
-	function handleClick(action: 'add' | 'remove') {
-		if (scope === 'event') {
-			action === 'remove'
-				? removeEvent(topicIndex, eventIndex ?? -1)
-				: addEvent(topicIndex);
-		} else {
-			action === 'remove' ? removeTopic(topicIndex) : addTopic();
-		}
-	}
+  function handleClick(action: 'add' | 'remove') {
+    if (scope === 'event') {
+      if (action === 'remove') {
+        if (eventId) {
+          removeEvent(topicIndex, eventId);
+        }
+      } else {
+        addEvent(topicIndex);
+      }
+    } else {
+      if (action === 'remove') {
+        removeTopic(topicIndex);
+      } else {
+        addTopic();
+      }
+    }
+  }
 
-	return (
-		<div className='EditActions flex items-center gap-1 pl-2'>
-			<button
-				type='button'
-				className={small_button}
-				title={`Add ${scope}`}
-				onClick={() => handleClick('add')}
-			>
-				<FontAwesomeIcon icon={faPlus} />
-			</button>
-
-			<button
-				type='button'
-				className={small_button}
-				title={`Remove ${title ?? scope}`}
-				onClick={() => handleClick('remove')}
-			>
-				<FontAwesomeIcon icon={faMinus} />
-			</button>
-		</div>
-	);
+  return (
+    <div className="EditActions flex items-center gap-1 pl-2">
+      <EditActionButton
+        action="add"
+        scope={scope}
+        handleClick={() => handleClick('add')}
+      />
+      <EditActionButton
+        action="remove"
+        scope={scope}
+        title={title}
+        handleClick={() => handleClick('remove')}
+      />
+    </div>
+  );
 }
 
 export default EditActions;
