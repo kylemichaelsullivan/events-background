@@ -1,18 +1,16 @@
 import { formatDate, dayFromDate } from '../../lib/scripts';
 
 type DisplayEventProps = {
-	when: string;
-	where: string;
+  what: string;
+  when: string;
 };
 
-export default function DisplayEvent({ when, where }: DisplayEventProps) {
-	const makeDate = (date: string) => {
-		return new Date(date.replace(/-/g, '/'));
-	};
+export default function DisplayEvent({ when, what }: DisplayEventProps) {
+  const date = new Date(when);
+  const formattedDate = formatDate(date);
+  const day = dayFromDate(date);
 
-	const dateObject = makeDate(when);
-	const date = formatDate(dateObject);
-	const day = dayFromDate(dateObject);
-
-	return <li className='DisplayEvent'>{`${date} (${day}): ${where}`}</li>;
+  return (
+    <li className="DisplayEvent">{`${formattedDate} (${day}): ${what}`}</li>
+  );
 }
