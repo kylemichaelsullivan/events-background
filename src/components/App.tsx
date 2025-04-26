@@ -1,4 +1,4 @@
-import { FormatProvider } from '../context/Format';
+import FormatProvider from '../context/FormatContext';
 
 import Title from './Title';
 import Edit from './edit/Edit';
