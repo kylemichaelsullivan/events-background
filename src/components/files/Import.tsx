@@ -1,55 +1,57 @@
-import { useData } from '../../context/Data';
+import type { ChangeEvent } from 'react';
+import { useRef } from 'react';
 
+import { useData } from '../../hooks/useData';
 import { schema } from './zod';
-
-import { faFileImport } from '@fortawesome/free-solid-svg-icons';
 
 import Button from './Button';
 
+import { faFileImport } from '@fortawesome/free-solid-svg-icons';
+
 function Import() {
 	const { applyImport } = useData();
+	const fileInputRef = useRef<HTMLInputElement>(null);
 
-	function handleImport() {
-		const input = document.createElement('input');
-		input.type = 'file';
-		input.accept = 'application/json';
-
-		input.click();
-
-		input.onchange = async (e) => {
-			const target = e.target as HTMLInputElement;
-			if (target.files && target.files.length > 0) {
-				const file = target.files[0];
-				if (file) {
-					const reader = new FileReader();
-					reader.onload = async (event) => {
-						const json = event?.target?.result;
-						try {
-							const parsedJSON = JSON.parse(json as string);
-							schema.parse(parsedJSON);
-							applyImport(parsedJSON);
-						} catch (error) {
-							if (error instanceof Error) {
-								console.error('Invalid JSON:', error.message);
-							} else {
-								console.error('Unknown error occurred:', error);
-							}
-						}
-					};
-					reader.readAsText(file);
+	const handleImport = (event: ChangeEvent<HTMLInputElement>) => {
+		const file = event.target.files?.[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				try {
+					const json = JSON.parse(e.target?.result as string);
+					schema.parse(json);
+					applyImport(json);
+				} catch (error) {
+					console.error('Error parsing JSON:', error);
+					alert(
+						'Error importing file. Please make sure it is a valid JSON file.',
+					);
 				}
-			}
-			input.remove();
-		};
-	}
+			};
+			reader.readAsText(file);
+		}
+	};
+
+	const handleButtonClick = () => {
+		fileInputRef.current?.click();
+	};
 
 	return (
-		<Button
-			title='Import'
-			icon={faFileImport}
-			order={1}
-			handleClick={handleImport}
-		/>
+		<>
+			<input
+				type='file'
+				ref={fileInputRef}
+				onChange={handleImport}
+				accept='.json'
+				className='hidden'
+			/>
+			<Button
+				title='Import'
+				icon={faFileImport}
+				order={2}
+				handleClick={handleButtonClick}
+			/>
+		</>
 	);
 }
 

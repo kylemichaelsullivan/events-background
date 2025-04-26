@@ -1,27 +1,22 @@
-import { useData } from '../../context/Data';
-
-import { faFileExport } from '@fortawesome/free-solid-svg-icons';
+import { useData } from '../../hooks/useData';
 
 import Button from './Button';
 
+import { faFileExport } from '@fortawesome/free-solid-svg-icons';
+
 function Export() {
 	const { data } = useData();
-	function handleExport() {
-		const stringifiedJSON = JSON.stringify(data);
 
-		const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(
-			stringifiedJSON,
-		)}`;
-
-		const exportFilename = 'events.json';
-
-		const linkElement = document.createElement('a');
-		linkElement.setAttribute('href', dataUri);
-		linkElement.setAttribute('download', exportFilename);
-		linkElement.click();
-
-		alert('Background exported successfully.');
-	}
+	const handleExport = () => {
+		const json = JSON.stringify(data, null, 2);
+		const blob = new Blob([json], { type: 'application/json' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = 'events.json';
+		a.click();
+		URL.revokeObjectURL(url);
+	};
 
 	return (
 		<Button
