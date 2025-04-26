@@ -2,8 +2,14 @@ import { createContext, useState, type ReactNode, useEffect } from 'react';
 import type { Items, Event } from '../types';
 import { DEFAULT_Data } from '../constants/defaults';
 
-const generateId = () =>
-  Date.now().toString(36) + Math.random().toString(36).substring(2);
+const generateId = () => {
+  const timestamp = Date.now().toString(36);
+  const randomStr = Math.random().toString(36).substring(2);
+  const uniquePrefix = Array.from({ length: 8 }, () =>
+    Math.floor(Math.random() * 16).toString(16)
+  ).join('');
+  return `${uniquePrefix}-${timestamp}-${randomStr}`;
+};
 
 export type DataContextType = {
   data: Items;
@@ -63,13 +69,16 @@ const DataProvider = ({ children }: DataProviderProps): JSX.Element => {
   };
 
   const dedupeAndSortEvents = (events: Event[]) => {
-    const uniqueEvents = events.filter((event, index, self) =>
-      !event.when && !event.what
-        ? true
-        : index ===
-          self.findIndex((e) => e.when === event.when && e.what === event.what)
+    const nonEmptyEvents = events.filter((event) => event.when || event.what);
+    const uniqueNonEmptyEvents = nonEmptyEvents.filter(
+      (event, index, self) =>
+        index ===
+        self.findIndex((e) => e.when === event.when && e.what === event.what)
     );
-    return sortEvents(uniqueEvents);
+
+    const emptyEvents = events.filter((event) => !event.when && !event.what);
+
+    return sortEvents([...uniqueNonEmptyEvents, ...emptyEvents]);
   };
 
   function addTopic() {
