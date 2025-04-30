@@ -1,8 +1,8 @@
 import {
-	createContext,
 	useState,
+	createContext,
 	type ChangeEvent,
-	type ReactNode,
+	type ReactNode
 } from 'react';
 import { DEFAULT_FontSize, DEFAULT_PaddingTop } from '../constants/defaults';
 
@@ -13,31 +13,31 @@ export type FormatContextType = {
 	setPaddingTop: (value: string) => void;
 	handleFormatChange: (
 		e: ChangeEvent<HTMLSelectElement>,
-		attribute: 'fontSize' | 'paddingTop',
+		attribute: 'fontSize' | 'paddingTop'
 	) => void;
 };
 
 export const FormatContext = createContext<FormatContextType | undefined>(
-	undefined,
+	undefined
 );
 
 type FormatProviderProps = {
 	children: ReactNode;
 };
 
-function FormatProvider({ children }: FormatProviderProps): JSX.Element {
+export function FormatProvider({ children }: FormatProviderProps): JSX.Element {
 	const [fontSize, setFontSize] = useState<string>(DEFAULT_FontSize);
 	const [paddingTop, setPaddingTop] = useState<string>(DEFAULT_PaddingTop);
 
 	function handleFormatChange(
 		e: ChangeEvent<HTMLSelectElement>,
-		attribute: 'fontSize' | 'paddingTop',
+		attribute: 'fontSize' | 'paddingTop'
 	) {
 		if (attribute === 'fontSize') {
 			setFontSize(e.target.value);
 		}
 		if (attribute === 'paddingTop') {
-			setPaddingTop(Number.parseInt(e.target.value).toString());
+			setPaddingTop(e.target.value);
 		}
 	}
 
@@ -48,12 +48,10 @@ function FormatProvider({ children }: FormatProviderProps): JSX.Element {
 				paddingTop,
 				setFontSize,
 				setPaddingTop,
-				handleFormatChange,
+				handleFormatChange
 			}}
 		>
 			{children}
 		</FormatContext.Provider>
 	);
 }
-
-export default FormatProvider;
