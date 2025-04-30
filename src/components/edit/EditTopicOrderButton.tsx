@@ -11,7 +11,7 @@ type EditTopicOrderButtonProps = {
 	handleTopicOrder: (
 		index: number,
 		direction: 'up' | 'down',
-		isDisabled: boolean,
+		isDisabled: boolean
 	) => void;
 };
 
@@ -21,7 +21,7 @@ function EditTopicOrderButton({
 	direction,
 	isFirst,
 	isLast,
-	handleTopicOrder,
+	handleTopicOrder
 }: EditTopicOrderButtonProps) {
 	const icon = direction === 'up' ? faArrowUp : faArrowDown;
 	const title = `Move${topic ? ` ${topic}` : ''} ${direction === 'up' ? 'Up' : 'Down'}`;

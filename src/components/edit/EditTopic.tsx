@@ -1,3 +1,5 @@
+import { useRef, useEffect } from 'react';
+
 import type { Events } from '../../types';
 
 import EditTopicTitleLine from './EditTopicTitleLine';
@@ -17,11 +19,23 @@ function EditTopic({
 	events,
 	topicIndex,
 	isFirst,
-	isLast,
+	isLast
 }: EditTopicProps) {
+	const titleRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		if (topic === '' && titleRef.current) {
+			titleRef.current.focus();
+		}
+	}, [topic]);
+
 	return (
 		<div className='EditTopic border bg-gray-400 p-2'>
-			<EditTopicTitleLine topic={topic} topicIndex={topicIndex} />
+			<EditTopicTitleLine
+				ref={titleRef}
+				topic={topic}
+				topicIndex={topicIndex}
+			/>
 
 			{events.length && <EditEvents events={events} topicIndex={topicIndex} />}
 

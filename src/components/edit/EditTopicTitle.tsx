@@ -1,23 +1,27 @@
 import { useData } from '../../hooks/useData';
+import { forwardRef } from 'react';
 
 type EditTopicTitleProps = {
-  topic: string;
-  topicIndex: number;
+	topic: string;
+	topicIndex: number;
 };
 
-function EditTopicTitle({ topic, topicIndex }: EditTopicTitleProps) {
-  const { blurTopicTitle } = useData();
+const EditTopicTitle = forwardRef<HTMLInputElement, EditTopicTitleProps>(
+	({ topic, topicIndex }, ref) => {
+		const { blurTopicTitle } = useData();
 
-  return (
-    <input
-      type="text"
-      className="EditTopicTitle w-full p-1 text-lg font-bold"
-      defaultValue={topic}
-      placeholder="Topic"
-      onBlur={() => blurTopicTitle(topicIndex)}
-      id={`topic-${topicIndex}`}
-    />
-  );
-}
+		return (
+			<input
+				type='text'
+				ref={ref}
+				className='EditTopicTitle w-full p-1 text-lg font-bold'
+				defaultValue={topic}
+				placeholder='Topic'
+				onBlur={() => blurTopicTitle(topicIndex)}
+				id={`topic-${topicIndex}`}
+			/>
+		);
+	}
+);
 
 export default EditTopicTitle;

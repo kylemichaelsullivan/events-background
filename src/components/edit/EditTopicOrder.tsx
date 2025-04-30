@@ -12,7 +12,7 @@ function EditTopicOrder({
 	topic,
 	topicIndex,
 	isFirst,
-	isLast,
+	isLast
 }: EditTopicOrderProps) {
 	const { handleTopicOrder } = useData();
 
