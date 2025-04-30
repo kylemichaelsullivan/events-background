@@ -11,7 +11,7 @@ function EditEventDetails({
 	what,
 	when,
 	topicIndex,
-	eventId,
+	eventId
 }: EditEventDetailsProps) {
 	const { blurEventWhen, blurEventWhat } = useData();
 

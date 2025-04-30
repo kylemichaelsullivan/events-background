@@ -13,7 +13,7 @@ function EditActionButton({
 	action,
 	scope,
 	title,
-	handleClick,
+	handleClick
 }: EditActionButtonProps) {
 	return (
 		<button

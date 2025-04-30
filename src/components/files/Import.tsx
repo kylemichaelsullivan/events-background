@@ -24,7 +24,7 @@ function Import() {
 				} catch (error) {
 					console.error('Error parsing JSON:', error);
 					alert(
-						'Error importing file. Please make sure it is a valid JSON file.',
+						'Error importing file. Please make sure it is a valid JSON file.'
 					);
 				}
 			};

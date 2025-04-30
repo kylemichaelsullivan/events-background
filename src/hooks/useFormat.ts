@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import {
 	FormatContext,
-	type FormatContextType,
+	type FormatContextType
 } from '../context/FormatContext';
 
 export function useFormat(): FormatContextType {
