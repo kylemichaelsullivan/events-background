@@ -31,9 +31,7 @@ export type DataContextType = {
 	applyImport: (json: Items) => void;
 };
 
-export const DataContext = createContext<DataContextType | undefined>(
-	undefined
-);
+const DataContext = createContext<DataContextType | undefined>(undefined);
 
 type DataProviderProps = {
 	children: ReactNode;
@@ -59,9 +57,13 @@ export function DataProvider({ children }: DataProviderProps): JSX.Element {
 			const dateB = b.when ? new Date(b.when) : null;
 
 			const timeA =
-				dateA && !isNaN(dateA.getTime()) ? dateA.getTime() : Infinity;
+				dateA && !isNaN(dateA.getTime())
+					? Date.UTC(dateA.getFullYear(), dateA.getMonth(), dateA.getDate())
+					: Infinity;
 			const timeB =
-				dateB && !isNaN(dateB.getTime()) ? dateB.getTime() : Infinity;
+				dateB && !isNaN(dateB.getTime())
+					? Date.UTC(dateB.getFullYear(), dateB.getMonth(), dateB.getDate())
+					: Infinity;
 
 			if (timeA === Infinity && timeB === Infinity) {
 				return 0;
@@ -244,3 +246,5 @@ export function DataProvider({ children }: DataProviderProps): JSX.Element {
 		</DataContext.Provider>
 	);
 }
+
+export { DataContext };
