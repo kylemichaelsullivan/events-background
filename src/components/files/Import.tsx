@@ -1,12 +1,12 @@
-import type { ChangeEvent } from 'react';
-import { useRef } from 'react';
+import { useRef, type ChangeEvent } from 'react';
+
+import { faFileImport } from '@fortawesome/free-solid-svg-icons';
 
 import { useData } from '../../hooks/useData';
-import { schema } from './zod';
 
 import Button from './Button';
 
-import { faFileImport } from '@fortawesome/free-solid-svg-icons';
+import { schema } from './zod';
 
 function Import() {
 	const { applyImport } = useData();

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { DataProvider } from './context/DataContext';
+
 import App from './components/App';
 
 import './index.css';

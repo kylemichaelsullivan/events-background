@@ -1,9 +1,9 @@
 import { useData } from '../../hooks/useData';
 import { useFormat } from '../../hooks/useFormat';
 
-import type { Item } from '../../types';
-
 import DisplayTopic from './DisplayTopic';
+
+import type { Item } from '../../types';
 
 function Preview() {
 	const { data } = useData();

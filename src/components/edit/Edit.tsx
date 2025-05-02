@@ -1,7 +1,8 @@
 import { useData } from '../../hooks/useData';
-import type { Item } from '../../types';
 
 import EditTopic from './EditTopic';
+
+import type { Item } from '../../types';
 
 function Edit() {
 	const { data } = useData();
