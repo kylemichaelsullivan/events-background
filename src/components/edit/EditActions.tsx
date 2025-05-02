@@ -1,4 +1,5 @@
 import { useData } from '../../hooks/useData';
+
 import EditActionButton from './EditActionButton';
 
 type EditActionsProps = {
@@ -9,9 +10,33 @@ type EditActionsProps = {
 };
 
 function EditActions({ scope, title, topicIndex, eventId }: EditActionsProps) {
-	const { addTopic, removeTopic, addEvent, removeEvent } = useData();
+	const { addTopic, removeTopic, addEvent, removeEvent, blurTopicTitle } =
+		useData();
+
+	function forceBlurActiveInput() {
+		const activeElement = document.activeElement as HTMLInputElement;
+		if (activeElement && 'blur' in activeElement) {
+			activeElement.blur();
+		}
+	}
 
 	function handleClick(action: 'add' | 'remove') {
+		const activeElement = document.activeElement as HTMLInputElement;
+
+		if (
+			activeElement &&
+			activeElement.id &&
+			activeElement.id.startsWith('topic-')
+		) {
+			const activeTopicIndex = parseInt(activeElement.id.split('-')[1], 10);
+
+			if (!isNaN(activeTopicIndex)) {
+				blurTopicTitle(activeTopicIndex, activeElement.value);
+			}
+		}
+
+		forceBlurActiveInput();
+
 		if (scope === 'event') {
 			if (action === 'remove') {
 				if (eventId) {

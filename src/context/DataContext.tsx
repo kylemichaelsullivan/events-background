@@ -1,4 +1,6 @@
-import { createContext, useState, type ReactNode, useEffect } from 'react';
+import { createContext, useState } from 'react';
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
+
 import type { Items, Event } from '../types';
 import { DEFAULT_Data } from '../constants/defaults';
 
@@ -13,11 +15,12 @@ const generateId = () => {
 
 export type DataContextType = {
 	data: Items;
+	setData: Dispatch<SetStateAction<Items>>;
 	addTopic: () => void;
 	removeTopic: (topicIndex: number) => void;
 	addEvent: (topicIndex: number) => void;
 	removeEvent: (topicIndex: number, eventId: string) => void;
-	blurTopicTitle: (topicIndex: number) => void;
+	blurTopicTitle: (topicIndex: number, directValue?: string) => void;
 	blurEventWhat: (topicIndex: number, eventId: string) => void;
 	blurEventWhen: (topicIndex: number, eventId: string) => void;
 	handleTopicOrder: (
@@ -36,7 +39,7 @@ type DataProviderProps = {
 	children: ReactNode;
 };
 
-const DataProvider = ({ children }: DataProviderProps): JSX.Element => {
+export function DataProvider({ children }: DataProviderProps): JSX.Element {
 	const [data, setData] = useState<Items>(() =>
 		DEFAULT_Data.map((topic) => ({
 			...topic,
@@ -130,11 +133,23 @@ const DataProvider = ({ children }: DataProviderProps): JSX.Element => {
 		}
 	}
 
-	function blurTopicTitle(topicIndex: number) {
-		const input = document.getElementById(
-			`topic-${topicIndex}`
-		) as HTMLInputElement | null;
-		const value = input?.value as string;
+	function blurTopicTitle(topicIndex: number, directValue?: string) {
+		let value: string;
+
+		if (directValue !== undefined) {
+			value = directValue;
+		} else {
+			const input = document.getElementById(
+				`topic-${topicIndex}`
+			) as HTMLInputElement | null;
+
+			if (!input || topicIndex < 0 || topicIndex >= data.length) {
+				return;
+			}
+
+			value = input.value;
+		}
+
 		const newData = [...data];
 		newData[topicIndex].topic = value;
 		setData(newData);
@@ -213,6 +228,7 @@ const DataProvider = ({ children }: DataProviderProps): JSX.Element => {
 		<DataContext.Provider
 			value={{
 				data,
+				setData,
 				addTopic,
 				blurTopicTitle,
 				removeTopic,
@@ -227,6 +243,4 @@ const DataProvider = ({ children }: DataProviderProps): JSX.Element => {
 			{children}
 		</DataContext.Provider>
 	);
-};
-
-export { DataProvider };
+}

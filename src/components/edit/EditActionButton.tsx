@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+
 import { small_button } from '../../lib/classNames';
 
 type EditActionButtonProps = {
@@ -15,14 +16,24 @@ function EditActionButton({
 	title,
 	handleClick
 }: EditActionButtonProps) {
+	const icon = action === 'add' ? faPlus : faMinus;
+	const buttonTitle =
+		action === 'add'
+			? `Add ${scope}`
+			: scope === 'topic'
+				? title
+					? `Remove ${title}`
+					: 'Remove topic'
+				: `Remove ${title || 'event'}`;
+
 	return (
 		<button
 			type='button'
-			className={`EditActionButton ${small_button}`}
-			title={`${action === 'add' ? 'Add' : 'Remove'} ${title ?? scope}`}
+			className={small_button}
+			title={buttonTitle}
 			onClick={handleClick}
 		>
-			<FontAwesomeIcon icon={action === 'add' ? faPlus : faMinus} />
+			<FontAwesomeIcon icon={icon} />
 		</button>
 	);
 }
